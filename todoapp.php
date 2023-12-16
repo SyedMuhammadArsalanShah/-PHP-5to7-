@@ -59,7 +59,27 @@ if ($resTBL) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
-    if (isset($_POST["title"])) {
+    if (isset($_POST["idedit"])) {
+        $id = $_POST["idedit"];
+        $title = $_POST["titleEdit"];
+        $desc = $_POST["descEdit"];
+
+
+
+        $sqlupdate = "UPDATE `info` SET `TITLE`='$title',`DESCRIPTION`='$desc' WHERE ID =  $id ";
+
+
+
+
+        $res =  mysqli_query($connection, $sqlupdate);
+
+
+        if ($res) {
+
+
+            echo "updated ";
+        }
+    } else {
         $title = $_POST["title"];
         $desc = $_POST["desc"];
 
@@ -118,6 +138,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="modal-body">
                     <form action="todoapp.php" method="post">
+
+
+                        <input type="hidden" name="idedit" id="editid">
                         <div class="mb-3">
                             <label for="edittitle" class="form-label">Title</label>
                             <input type="text" name="titleEdit" class="form-control" id="edittitle">
@@ -126,13 +149,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <label for="editdesc" class="form-label">Description</label>
                             <textarea class="form-control" name="descEdit" id="editdesc" rows="3"></textarea>
                         </div>
-
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -248,8 +271,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                         echo "<td> 
-                        <button type='button' class='btn btn-info edit'>Edit</button>
-                        <button type='button' class='btn btn-warning'>Delete</button></td> </tr>";
+                        <button type='button' class='btn btn-info edit'   id=" . $item["ID"] . ">Edit</button>
+                        <button type='button' class='btn btn-warning' >Delete</button></td> </tr>";
                     }
                 }
 
@@ -308,7 +331,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 edittitle.value = title;
                 editdesc.value = desc;
+                editid.value = e.target.id
 
+                // console.log(e.target.id)
 
 
 
